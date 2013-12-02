@@ -1,0 +1,12 @@
+<!ELEMENT blog (post*)>
+<!ELEMENT post (title,text,image*,signature,date)>
+<!ELEMENT image (src,imagetext)>
+
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT text (#PCDATA)>
+<!ELEMENT imagetext (#PCDATA)>
+<!ELEMENT signature (#PCDATA)>
+<!ELEMENT date (#PCDATA)>
+<!ELEMENT src (#PCDATA)>
+
+

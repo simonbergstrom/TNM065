@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859_1" standalone = "no" ?>
+<?xml-stylesheet type="text/xsl" href="index-html.xsl"?>
+
+<!DOCTYPE blog SYSTEM "http://www.student.itn.liu.se/~simbe109/TNM065/project/blog.dtd"> 
+
+<blog>
+<post>
+<title> Inlägg 1 </title>
+<text> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </text>	
+<image> 
+<src>http://www.google.com </src>
+<imagetext> En liten text </imagetext>
+</image> 
+<signature> S.B </signature>
+<date> 2013-11-24 </date>
+</post>
+
+<post>
+<title> Inlägg 2 </title>
+<text> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </text>	
+<image> 
+<src>http://www.hej.com </src>
+<imagetext> En stor text </imagetext>
+</image> 
+
+<image> 
+<src>http://www.paj.com </src>
+<imagetext> En mellan text </imagetext>
+</image> 
+<signature> S.B </signature>
+<date> 2013-11-24 </date>
+</post>
+
+</blog>	
