@@ -32,9 +32,16 @@ if($debug){
     mysql_select_db("tnm065")
         or die("Could not select database");
     $returnstring ="";
- 
 
-		$title = $_POST["title"]; $text= $_POST["textarea"]; $signature=$_POST["signature"]; 
+	 // Inialize session
+	session_start();
+
+	// Check, if username session is NOT set then this page will jump to login page
+	if (!isset($_SESSION['username'])) {
+	header('Location: startpage.php');
+	}
+
+		$title = $_POST["title"]; $text= $_POST["textarea"]; $signature=$_POST["signature"]; $search =$_POST["search"];
 	    
 		$now = new DateTime();
 		$now->format('Y-m-d H:i:s');    // MySQL datetime format
@@ -45,7 +52,7 @@ if($debug){
 	      $query = "INSERT INTO post(title,text,signature)
           VALUES ('$title','$text','$signature')";
 
-     	if($_POST["title"] != "Fyll i....." && $_POST["textarea"] != "Fyll i....." && $_POST["signature"] != "Fyll i....." && isset($_POST["submitbtn"]))
+     	if($_POST["title"] !== "Fyll i....." && $_POST["textarea"] !== "Fyll i....." && $_POST["signature"] !== "Fyll i....." && isset($_POST["submitbtn"]))
      	{
 	    	$result = mysql_query($query)
 	    	or die("Query failed");	
@@ -55,6 +62,22 @@ if($debug){
      	}
      	else
      		;
+     	
+     	if(isset($_POST["searchbtn"]))
+     	{
+     		$query ="SELECT * FROM post WHERE title LIKE '%$search%'";
+
+     		$result = mysql_query($query)
+	    	or die("Query failed");	
+
+	    	while ($line = mysql_fetch_object($result))
+	    	{
+	    		$title = $line->title;
+	    		$returnstring = $returnstring . $title;
+	    	}
+	    	print utf8_encode($returnstring);	
+     	}
+
 ?>
 </test>
 

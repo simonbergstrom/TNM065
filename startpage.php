@@ -20,8 +20,9 @@ if($debug){
 ]>
  
 <?php
- 
-  
+    //Session för att logga in
+    session_start();
+
     $link = mysql_connect("localhost", "root", "root")
         or die("Could not connect");
      
@@ -32,13 +33,30 @@ if($debug){
     $query = "SELECT  ID,date,signature,title,text
             FROM post";
      
- 
     $result = mysql_query($query)
     or die("Query failed");
 	
-	$a='ä';$A='Ä';$o='ö';$O='Ö'; 
-	$hej = array("å","ä","ö","Å","Ä","Ö");
-	$dej = array("&aring;","&auml;","&ouml;","&Aring;","&Auml;","&Ouml;");
+    // Kolla login uppgifter
+
+    $login = mysql_query("SELECT * FROM user WHERE (username = '" . mysql_real_escape_string($_POST['username']) . "') and (password = '" . mysql_real_escape_string($_POST['password']) . "')")
+	or die("Query failed");
+    // Check username and password match
+    if (mysql_num_rows($login) == 1)
+    {
+        // Set username session variable
+        $_SESSION['username'] = $_POST['username'];
+        // Jump to secured page
+        header('Location: admin.php');
+    }
+    else 
+    {
+    // Nothing 
+        //SKriv ut nått felmeddelande... fixa entity för de sen..
+    }
+
+
+	//$hej = array("å","ä","ö","Å","Ä","Ö");
+	//$dej = array("&aring;","&auml;","&ouml;","&Aring;","&Auml;","&Ouml;");
  
  
      $returnstring = "<blog>";
@@ -79,7 +97,7 @@ if($debug){
  
         }
      $returnstring =  $returnstring . "</blog>";
-	 $returnstring = str_replace($hej,$dej,$returnstring);
+	 //$returnstring = str_replace($hej,$dej,$returnstring);
  
     print utf8_encode($returnstring);
   

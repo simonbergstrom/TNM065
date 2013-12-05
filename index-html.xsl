@@ -11,7 +11,12 @@
 					<title> Simon &amp; Max's Blogg </title>
 				</head>
 				<body style="background-color:#FFFFCC;">
-					<h1 style="text-align:center;"> Bloggen </h1>			
+					<h1 style="text-align:center;"> Bloggen </h1>
+					<form action="startpage.php" name="myFormlogin" method="post" style="text-align:right;">
+					Användarnamn: <input type="text" name="username" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />	
+					Lösenord: <input type="text" name="password" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />	<br></br>
+					<input type="submit" value="Logga in" name="loginbtn"/>
+					</form>	
 					<xsl:apply-templates select="post" /> 	
 				</body>
 		   </html>
