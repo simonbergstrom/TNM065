@@ -26,12 +26,12 @@ if($debug){
     $link = mysql_connect("localhost", "root", "root")
         or die("Could not connect");
      
-    mysql_select_db("tnm065")
+    mysql_select_db("project")
         or die("Could not select database");
     $returnstring ="";
  
-    $query = "SELECT  ID,date,signature,title,text
-            FROM post";
+    $query = "SELECT  id,date,signature,title,text
+            FROM post ORDER BY date DESC";
      
     $result = mysql_query($query)
     or die("Query failed");
@@ -62,9 +62,9 @@ if($debug){
      $returnstring = "<blog>";
         while ($line = mysql_fetch_object($result)) {
              
-            $ID = $line->ID;
+            $ID = $line->id;
  
-            $queryimage = "SELECT  path , image.ID, post.ID, pictext FROM image JOIN post WHERE image.ID = post.ID ORDER BY post.date DESC";
+            $queryimage = "SELECT  path , image.id, post.id, pictext FROM image JOIN post WHERE image.id = post.id ORDER BY post.date DESC";
             $resultimage = mysql_query($queryimage);
  
             $date = $line->date;
@@ -80,7 +80,7 @@ if($debug){
              while ($lineimage = mysql_fetch_object($resultimage)){
                 $path = $lineimage->path;
                 $pictext = $lineimage->pictext;
-                $IDimage = $lineimage->ID;
+                $IDimage = $lineimage->id;
                
                 if($ID == $IDimage){
  
