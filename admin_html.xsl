@@ -35,11 +35,11 @@
 				</form>	
 			</div>	
 
-			 <div id="picvalues">
-				<form action="admin.php" name="pic" method="post" style="text-align:center; margin-top:3pc;">
+			 <!--<div id="picvalues">
+				<form action="admin.php" name="pic" method="post" style="text-align:center; margin-top:3pc;" enctype="multipart/form-data">
 					<xsl:for-each select="image">
 
-						<!--<p><textarea  rows="1" cols="50" id="srcinfo" name="{src}" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue">Fyll i.....</textarea> </p> -->
+						<p><textarea  rows="1" cols="50" id="srcinfo" name="{src}" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue">Fyll i.....</textarea> </p> 
 
 						<p> <label for="file">Filename:</label>
 						<input type="file" name="{src}" id="srcname"/> </p>
@@ -49,11 +49,17 @@
 
 				<p><input type="submit" value="OK" name="picbtn"/></p>
 				</form>	
-			</div>
+			</div>-->
 
 
 			<div id="createpost">
-				<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;">
+				<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;" enctype="multipart/form-data">
+
+					<xsl:for-each select="image">
+					<p> <label for="file">Filename:</label>
+						<input type="file" name="{src}" id="srcname"/> </p>
+					<p><textarea  rows="1" cols="50" id="picinfo" name="{imagetext}" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue">Fyll i.....</textarea> </p>
+					</xsl:for-each>	
 				
 					<p><xsl:value-of select="title"/></p>
 					<input type="text" name="title" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />	

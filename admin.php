@@ -26,10 +26,6 @@ if($debug){
 <signature>Din signatur: </signature>
 <?php
 
-
-
-
-
 	$link = mysql_connect("localhost", "root", "root")
         or die("Could not connect");
      
@@ -102,52 +98,28 @@ if($debug){
      		print utf8_encode($resultstring);
      		
      	}
-     	// När knappen OK trycks för att skicka info om bilder som ska läggas till...
-     	if(isset($_POST["picbtn"]))
-     	{
-     		$nrb=$_SESSION['count'];	
-     		//print "<test>Nummer2:$nrb </test>";
-     		$source = array();
-			$bildtext = array();
 
-            
-            $ulla = $_POST["src1"];
-            $bulla = $_POST["text1"];    
-            print "<test> FIL att ladda upp .. $ulla och $bulla </test>";
-            
 
-            
-
-            for($i=1;$i<=$nrb;$i++)
-             {
-                array_push($source, $_POST['src' . $i]);
-                array_push($bildtext, $_POST['text' . $i]);
-             }   
-                $_SESSION['src'] = $source; 
-                $_SESSION['txt'] = $bildtext;
-                //print_r($source[0]);
-                //print_r ($source); 
-                //echo "txt:";
-                //print_r($bildtext);
-     	}
         //När man nu vill mata in hela inlägget med eller utan bilder..
         if(isset($_POST["submitbtn"]))
         {
             //Hämtar sessionvärdena
             $nrb = $_SESSION['count'];
-            $source = $_SESSION['src'];
-            $bildtext = $_SESSION['txt'];
 
             $title = $_POST["title"]; $text= $_POST["textarea"]; $signature=$_POST["signature"];
 
-            print "<test> Count: $nrb Source: $source[0] Txt: $bildtext[0] Title: $title Textarea: $text Signature: $signature </test>";
+            print "<test> Count: $nrb Source:" .  $_FILES["src1"]["name"] ."TmpSource:". $_FILES["src1"]["tmp_name"] .  "Txt:" . $_POST["text1"] . "Title: $title Textarea: $text Signature: $signature </test>";
 
+            // Säkrar strängarna för att införa dessa i DB    
+            $title = mysql_real_escape_string($title);
+            $text = mysql_real_escape_string($text); 
+            $signature = mysql_real_escape_string($signature);
                 
             $query = "INSERT INTO post(title,text,signature)
                 VALUES ('$title','$text','$signature')";
 
             //Kollar så inga post variabler är tomma...        
-            if($title != "Fyll i....." && $text!= "Fyll i....." && $signature!= "Fyll i.....")   
+            if($title !== "Fyll i....." && $text!== "Fyll i....." && $signature!== "Fyll i.....")   
             {
                 $result = mysql_query($query)
                     or die("Query failed");
@@ -161,54 +133,60 @@ if($debug){
                             or die("Query failed"); 
 
                          $id = mysql_fetch_array($id);
-                         $id = $id['ID'];     
+                         $id = $id['ID']; 
+                         print "<test> ID: $id  src: " . $_FILES["src1"]["name"] . $_POST["text1"] . " </test>";    
                          
                         
-                        for($i=0;$i<$nrb;$i++)
+                        for($i=1;$i<=$nrb;$i++)
                         {
-                            $src = $source[$i];
-                            $pictxt = $bildtext[$i]; 
+                            $src = $_FILES["src".$i]["name"];
+                            //$tmpsrc = $_FILES["src".$i]["tmp_name"];
+                            $pictxt = $_POST["text".$i]; 
 
                             //Laddar upp bilden på servern...    
                              $allowedExts = array("gif", "jpeg", "jpg", "png");
-                            // $temp = explode(".", $_FILES["file"]["name"]);
-                            // $extension = end($temp);
-                            // if ((($_FILES["file"]["type"] == "image/gif")
-                            // || ($_FILES["file"]["type"] == "image/jpeg")
-                            // || ($_FILES["file"]["type"] == "image/jpg")
-                            // || ($_FILES["file"]["type"] == "image/pjpeg")
-                            // || ($_FILES["file"]["type"] == "image/x-png")
-                            // || ($_FILES["file"]["type"] == "image/png"))
-                            // && ($_FILES["file"]["size"] < 20000)
-                            // && in_array($extension, $allowedExts))
-                            //   {
-                            //   if ($_FILES["file"]["error"] > 0)
-                            //     {
-                            //     echo "Return Code: " . $_FILES["file"]["error"] . "<br>";
-                            //     }
-                            //   else
-                            //     {
-                            //     echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-                            //     echo "Type: " . $_FILES["file"]["type"] . "<br>";
-                            //     echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-                            //     echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br>";
+                             $temp = explode(".", $_FILES["src".$i]["name"]);
+                             $extension = end($temp);
+                             if ((($_FILES["src".$i]["type"] == "image/gif")
+                             || ($_FILES["src".$i]["type"] == "image/jpeg")
+                             || ($_FILES["src".$i]["type"] == "image/jpg")
+                             || ($_FILES["src".$i]["type"] == "image/pjpeg")
+                             || ($_FILES["src".$i]["type"] == "image/x-png")
+                             || ($_FILES["src".$i]["type"] == "image/png"))
+                             && ($_FILES["src".$i]["size"] < 200000000)
+                             && in_array($extension, $allowedExts))
+                              {
+                              if ($_FILES["src".$i]["error"] > 0)
+                                {
+                                echo "<test> Return Code: " . $_FILES["src".$i]["error"] . "</test>";
+                                }
+                              else
+                                {
+                                echo "<test> Upload: " . $_FILES["src".$i]["name"];
+                                echo "Type: " . $_FILES["src".$i]["type"] . "<br>";
+                                echo "Size: " . ($_FILES["src".$i]["size"] / 1024) . "kB";
+                                echo "Temp file: " . $_FILES["src".$i]["tmp_name"] . "</test>";
 
-                            //     if (file_exists("upload/" . $_FILES["file"]["name"]))
-                            //       {
-                            //       echo $_FILES["file"]["name"] . " already exists. ";
-                            //       }
-                            //     else
-                            //       {
-                            //       move_uploaded_file($_FILES["file"]["tmp_name"],
-                            //       "upload/" . $_FILES["file"]["name"]);
-                            //       echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
-                            //       }
-                            //     }
-                            //   }
-                            // else
-                            //   {
-                            //   echo "Invalid file";
-                            //   }
+                                if (file_exists("pictures/" . $_FILES["src".$i]["name"]))
+                                  {
+                                  echo "<test>" . $_FILES["src".$i]["name"] . " already exists. </test> ";
+                                  }
+                                else
+                                  {
+                                  move_uploaded_file($_FILES["src".$i]["tmp_name"],
+                                  "pictures/" . $_FILES["src".$i]["name"]);
+                                  echo "<test> Stored in: " . "pictures/" . $_FILES["src".$i]["name"] . "</test>";
+                                  }
+                                }
+                              }
+                            else
+                              {
+                              echo "<test>Invalid file </test>";
+                              }
+                              // Säkra strängarna...
+                              $src = "pictures/" . $src; 
+                              $src = mysql_real_escape_string($src);
+                              $pictxt = mysql_real_escape_string($pictxt);
 
                             // Lägger en url till bilden på databasen
                             $query = "INSERT INTO image (id,path,pictext)
@@ -218,9 +196,9 @@ if($debug){
                                  or die("Query failed"); 
     
                         } 
-                        
                                      
                     }
+
                     if(!mysql_errno())
                             print "<test> Posten är inlagd! </test>";
                           
@@ -229,11 +207,6 @@ if($debug){
             {
                 print "<test> Du har missat att fylla i någon ruta..</test>";
             } 
-
-            
-              
-
-
 
         }    
 ?>
