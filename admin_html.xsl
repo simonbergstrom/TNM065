@@ -23,7 +23,7 @@
   
   	<xsl:template match="post">
 		<html>
-			<div id="nrofpic">
+			<div id="createpost" style="border:2px solid;float:left;" >
 				<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;">
 				<select name ="nrofpic">
 			        <option value ="0">0</option>
@@ -33,26 +33,7 @@
 				</select>
 				<p><input type="submit" value="OK" name="nrofpicbtn"/></p>
 				</form>	
-			</div>	
-
-			 <!--<div id="picvalues">
-				<form action="admin.php" name="pic" method="post" style="text-align:center; margin-top:3pc;" enctype="multipart/form-data">
-					<xsl:for-each select="image">
-
-						<p><textarea  rows="1" cols="50" id="srcinfo" name="{src}" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue">Fyll i.....</textarea> </p> 
-
-						<p> <label for="file">Filename:</label>
-						<input type="file" name="{src}" id="srcname"/> </p>
-						<p><textarea  rows="1" cols="50" id="picinfo" name="{imagetext}" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue">Fyll i.....</textarea> </p>
-
-					</xsl:for-each>	
-
-				<p><input type="submit" value="OK" name="picbtn"/></p>
-				</form>	
-			</div>-->
-
-
-			<div id="createpost">
+			
 				<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;" enctype="multipart/form-data">
 
 					<xsl:for-each select="image">
@@ -75,21 +56,35 @@
 					<br></br>	
 					<p><input type="submit" value="Posta inlägg" name="submitbtn"/>	</p>
 
+
 				</form>	
 			</div>	
 
-			<div id="editpost">
+			<div id="editpost" style="border:2px solid; float:left;">
 				
 				<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;">
 
 					<input type="text" name="search" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />
 					<input type="submit" value="Sök inlägg" name="searchbtn"/>
 
-				</form>		
+				</form>
 
-				<xsl:apply-templates select="test"/> 	
+
+				<!-- Visa resultat av sökningen i någon form av tabell...
+
+				<xsl:for-each select="image">
+
+				</xsl:for-each>	-->	
+
+
+				<!-- Sen ska datan visas i  fönster liknande de som finns för att skapa ett inlägg.. -->	
 				
 			</div>	
+
+
+			<!-- Status/Error meddelande som visas då någon tjänst att utförts på hemsidan. -->
+			<p style="text-align:center;color:green;"><xsl:apply-templates select="status"/> </p>
+			<p style="text-align:center;color:red;"><xsl:apply-templates select="error"/> </p> 
 
 			 <p style="text-align:center"><xsl:value-of select="date"/></p>
 

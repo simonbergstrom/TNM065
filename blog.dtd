@@ -1,5 +1,5 @@
 <!ELEMENT blog (post*)>
-<!ELEMENT post (title,text,image*,signature,date)>
+<!ELEMENT post (title,text,image*,signature,date,status*,error*)>
 <!ELEMENT image (src,imagetext)>
 
 <!ELEMENT title (#PCDATA)>
@@ -8,5 +8,8 @@
 <!ELEMENT signature (#PCDATA)>
 <!ELEMENT date (#PCDATA)>
 <!ELEMENT src (#PCDATA)>
+<!ELEMENT status (#PCDATA)>
+<!ELEMENT error (#PCDATA)>
+
 
 
