@@ -62,6 +62,8 @@ if($debug){
 	    		$title = $line->title;
 	    		$returnstring = $returnstring . $title;
 	    	}
+                $returnstring = "<test>" . $returnstring . "</test>";
+
 	    	print utf8_encode($returnstring);	
      	}
 
