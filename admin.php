@@ -25,6 +25,7 @@ if($debug){
 <signature>Din signatur: </signature>
 <?php
 //Test
+//TEst nummer trw
 	$link = mysql_connect("localhost", "root", "root")
         or die("Could not connect");
      
