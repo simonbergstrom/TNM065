@@ -19,13 +19,13 @@ if($debug){
 
 
 
-
 <blog>
 <post><title>Fyll i titel:</title>
 <text>Skriv ditt inl&auml;gg:</text>
 <signature>Din signatur: </signature>
 <?php
-
+//Test
+//TEst nummer trw
 	$link = mysql_connect("localhost", "root", "root")
         or die("Could not connect");
      
