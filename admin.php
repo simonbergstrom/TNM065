@@ -20,12 +20,8 @@ if($debug){
 
 
 <blog>
-<post><title>Fyll i titel:</title>
-<text>Skriv ditt inl&auml;gg:</text>
-<signature>Din signatur: </signature>
 <?php
-//Test
-//TEst nummer trw
+
 	$link = mysql_connect("localhost", "root", "root")
         or die("Could not connect");
      
@@ -44,10 +40,6 @@ if($debug){
 
 		$title = $_POST["title"]; $text= $_POST["textarea"]; $signature=$_POST["signature"]; $search =$_POST["search"];
 	    
-        //Klocka/Datum längst ner på sidan...
-		$now = new DateTime();   
-		$now->setTimezone(new DateTimeZone('Europe/Stockholm'));
-		$date = $now->getTimestamp(); 
 
      	// Om man söker efter inlägg.. inte klart än
      	if(isset($_POST["searchbtn"]))
@@ -57,20 +49,80 @@ if($debug){
      		$result = mysql_query($query)
 	    	or die("Query failed");	
 
+            $resultstring="";
+            //Visa resultat av sökningen... visar titel,signatur och datum..
+            
 	    	while ($line = mysql_fetch_object($result))
 	    	{
+                $returnstring = $returnstring . "<post>";
 	    		$title = $line->title;
-	    		$returnstring = $returnstring . $title;
-	    	}
-                $returnstring = "<test>" . $returnstring . "</test>";
+                $date = $line->date;
+                $signature = $line->signature;
 
+	    		$returnstring = $returnstring ."<title>" .  $title . "</title>";
+                $returnstring = $returnstring ."<signature>" .  $signature . "</signature>";
+                $returnstring = $returnstring ."<date>" . $date . "</date>";
+                $returnstring = $returnstring . "</post>";
+	    	}
+                
 	    	print utf8_encode($returnstring);	
      	}
+
+
+
+
+        if(isset($_GET["title"]) && isset($_GET["dateid"]))
+        {
+            $test = $_GET["title"];
+            $dateid = $_GET["dateid"];
+
+            $query ="SELECT title,text,signature,date,image.path FROM post JOIN image ON post.id=image.id WHERE post.date LIKE '$dateid'";
+            print utf8_encode("<test> SASSE: $test DATEID: $dateid </test>");
+
+            $result = mysql_query($query)
+            or die("Query failed"); 
+
+            //Sparar path till alla bilder
+            $pathtemp=array();
+            $count=0;
+            $returnstring="";
+
+            //Hämtar info som ev. ska redigeras
+            //Borde bara visa ett inlägg!!
+
+            $line = mysql_fetch_object($result);
+            $titletemp = $line->title;
+            $texttemp = $line->text;
+            $signaturetemp = $line->signature;
+            $datetemp = $line->date;
+            array_push($pathtemp,$line->path);
+
+            $resultstring="<post><title>" . $titletemp . "</title>";
+            $resultstring= $resultstring ."<text>" . $texttemp . "</text>"; 
+            $resultstring= $resultstring ."<signature>" . $signaturetemp . "</signature>";
+            $resultstring= $resultstring ."<date>" . $datetemp . "</date>";
+            //$resultstring= $resultstring ."<image>" . "<src>" $datetemp . "</src>";
+
+            //OM mer än 1 bild..
+            while($line = mysql_fetch_object($result))
+            {
+                array_push($pathtemp,$line->path);
+                $count=$count+1;
+                //$resultstring= $resultstring . "<src>" $datetemp . "</src>";
+            } 
+
+            $resultstring= $resultstring ."</post>";
+            //$edittitle;   
+            //$query = "UPDATE post SET title =  'HEY update!' WHERE DATE =  '2013-12-11 13:10:48"
+
+            print utf8_encode($resultstring);
+
+        }    
 
      	//antalet bilder som ska läggas till printas ut...
      	if(isset($_POST["nrofpicbtn"]))
      	{
-     		
+     		$resultstring="";
      		$nr = $_POST["nrofpic"];
 
 
@@ -94,6 +146,8 @@ if($debug){
         { 
             //Hämtar sessionvärdena
             $nrb = $_SESSION['count'];
+
+            echo "<post>";
 
             $title = $_POST["title"]; $text= $_POST["textarea"]; $signature=$_POST["signature"];
 
@@ -163,7 +217,8 @@ if($debug){
                                   "pictures/" . $_FILES["src".$i]["name"]);
                                   //echo "<test> Stored in: " . "pictures/" . $_FILES["src".$i]["name"] . "</test>";
                                   }
-                                                                    // Säkra strängarna...
+                                    
+                                    // Säkra strängarna...
                                   $src = "pictures/" . $src; 
                                   $src = mysql_real_escape_string($src);
                                   $pictxt = mysql_real_escape_string($pictxt);
@@ -198,15 +253,14 @@ if($debug){
             else
             {
               print "<error> Du har missat att fylla i någon ruta..</error>";
-            } 
+            }
+            echo "</post>"; 
         }
+
+
 ?>
+<copyright> <?php print date('Y-m-d H:m:s') ?> </copyright>
 
-
-
-<date> <?php print date('Y-m-d H:m:s',$date) ?> </date>
-
-</post>
 </blog>
 
 <?php
