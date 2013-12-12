@@ -63,10 +63,32 @@ if($debug){
                 $returnstring = $returnstring ."<signature>" .  $signature . "</signature>";
                 $returnstring = $returnstring ."<date>" . $date . "</date>";
                 $returnstring = $returnstring . "</post>";
+
+                
 	    	}
                 
 	    	print utf8_encode($returnstring);	
      	}
+        if (isset($_POST["editbtn"]))
+        {
+            $title = $_POST["title"];
+            $text  = $_POST["textarea"];  
+            $signature = $_POST["signature"];
+            $date = $_SESSION["date"];
+
+            
+
+            $query = "UPDATE post SET title='$title',text='$text',signature='$signature' WHERE date='$date'";
+
+            $result = mysql_query($query)
+                or die("Query failed");
+
+                if(!mysql_errno() && isset($_POST["titleedit"]) && isset($_POST["textareaedit"]) && isset($_POST["signatureedit"]))
+                    print "<status> Inlägget ändrades! </status>";
+                else
+                    print "<error> Du har inte laddat in något inlägg </error>";
+
+        }
 
 
 
@@ -108,12 +130,13 @@ if($debug){
             {
                 array_push($pathtemp,$line->path);
                 $count=$count+1;
-                //$resultstring= $resultstring . "<src>" $datetemp . "</src>";
+
             } 
 
             $resultstring= $resultstring ."</post>";
-            //$edittitle;   
-            //$query = "UPDATE post SET title =  'HEY update!' WHERE DATE =  '2013-12-11 13:10:48"
+
+            //Behövs då vi ska uppdatera inlägget..Primary key
+            $_SESSION["date"] = $datetemp;
 
             print utf8_encode($resultstring);
 

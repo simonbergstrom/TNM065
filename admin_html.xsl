@@ -89,18 +89,20 @@
 						<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;">
 
 							<p>Titel:</p>
-							<input type="text" name="title" value="{post/title}"/>
+							<input type="text" name="titleedit" value="{post/title}"/>
 
-							<p>Skriv ditt inlägg:</p>
-							<textarea rows="10" cols="30" id="myForm" name="textarea" ><xsl:value-of select="post/text"/>.</textarea>
+							<p>Redigera inlägg:</p>
+							<textarea rows="10" cols="30" id="myForm" name="textareaedit" ><xsl:value-of select="post/text"/>.</textarea>
 
 							<p>Din signatur:</p>
-								<input type="text" name="signature" value="{post/signature}"/>	
+								<input type="text" name="signatureedit" value="{post/signature}"/>	
 
-							<p><input type="submit" value="Utför ändringar" name="submitbtn"/>	</p>
+							<p><input type="submit" value="Utför ändringar" name="editbtn"/></p>
 
 						</form>
 
+							<p style="text-align:center;color:green;"><xsl:apply-templates select="status"/> </p>
+							<p style="text-align:center;color:red;"><xsl:apply-templates select="error"/> </p> 
 
 					</div>	
 
