@@ -17,7 +17,7 @@
 				</head>
 				<body style="background-color:#FFFFCC;">
 					
-					<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="border-bottom:3px solid; color:orange;"  >
+					<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="border-bottom:3px solid; color:green;"  >
 			   		   <div class="container" >
 
 			      			<h1 style="text-align:center;" > Bloggen  </h1>
@@ -25,7 +25,7 @@
 
 			 	   </div>
 			 	  <div style="margin-top:3cm">
-					 <xsl:apply-templates select="post" margin-top="1in"  /> 
+					 <xsl:apply-templates select="post" /> 
 					</div>
 				</body>
 		   </html>
