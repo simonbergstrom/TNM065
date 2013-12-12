@@ -18,10 +18,15 @@
 					<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="border-bottom:3px solid; color:green;"  >
 			   		   <div class="container" >
 			   		   		<div class="navbar-header">
-			      			<h2 > Bloggen  </h2>
+			    
+        					  <h2 >Bloggen  </h2>
+        					  <a style="color:green; text-align:center;"  href="mobil.php"> Bloggen i RSS <img src="pictures/rss.png" height="20" weight="40"/></a>
+
 			      			</div>
 
 			      			<div class="navbar-collapse collapse">
+			  
+
 					      	<form action="startpage.php" name="myFormlogin" method="post" class="navbar-form navbar-right" role="form">
 							 	<div class="form-group">
 							 		<input type="text" placeholder="username " class="form-control" name="username" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />
@@ -39,8 +44,11 @@
 							Lösenord: <input type="password" name="password" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" /> -->
 							<button type="submit" class="btn btn-success" name="loginbtn" value="Logga in" >Sign in</button>
 							<!--<input type="submit" value="Logga in" name="loginbtn"/>-->
+
+
 							</form>	
 							</div>
+
 			    	  </div>
 
 			 	   </div>
