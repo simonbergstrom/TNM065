@@ -33,7 +33,7 @@
 				             		
 				          		</div>
 				           		<div class="form-group">
-				           			<input type="password" placeholder="password" class="form-control" name="paswword" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />
+				           			<input type="password" placeholder="password" class="form-control" name="password" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />
 
 				             		<!-- <input type="password" placeholder="Password" class="form-control"> -->
 				       		    </div>

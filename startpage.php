@@ -37,23 +37,28 @@ if($debug){
     or die("Query failed");
 	
     // Kolla login uppgifter
+    if(isset($_POST['loginbtn'])) {
+    $username = ($_POST['username']);
+    $password = ($_POST['password']);
 
-    $login = mysql_query("SELECT * FROM user WHERE (username = '" . mysql_real_escape_string($_POST['username']) . "') and (password = '" . mysql_real_escape_string($_POST['password']) . "')")
-	or die("Query failed");
-    // Check username and password match
+    $login = mysql_query("SELECT * FROM user WHERE (username = '$username' AND password = '$password')")
+	or die("Query faileD");
+   // Check username and password match
     if (mysql_num_rows($login) == 1)
     {
+
         // Set username session variable
         $_SESSION['username'] = $_POST['username'];
         // Jump to secured page
         header('Location: admin.php');
     }
-    else 
+}
+/*     else 
     {
     // Nothing 
         //SKriv ut nått felmeddelande... fixa entity för de sen..
     }
-
+*/
 
 	//$hej = array("å","ä","ö","Å","Ä","Ö");
 	//$dej = array("&aring;","&auml;","&ouml;","&Aring;","&Auml;","&Ouml;");
