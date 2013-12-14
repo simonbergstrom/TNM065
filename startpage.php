@@ -30,7 +30,7 @@ if($debug){
         or die("Could not select database");
     $returnstring ="";
  
-    $query = "SELECT  id,date,signature,title,text
+    $query = "SELECT id,date,signature,title,text
             FROM post ORDER BY date DESC";
      
     $result = mysql_query($query)
@@ -46,7 +46,6 @@ if($debug){
    // Check username and password match
     if (mysql_num_rows($login) == 1)
     {
-
         // Set username session variable
         $_SESSION['username'] = $_POST['username'];
         // Jump to secured page
@@ -56,13 +55,9 @@ if($debug){
 /*     else 
     {
     // Nothing 
-        //SKriv ut nått felmeddelande... fixa entity för de sen..
+        //Skriv ut nått felmeddelande... fixa entity för de sen..
     }
 */
-
-	//$hej = array("å","ä","ö","Å","Ä","Ö");
-	//$dej = array("&aring;","&auml;","&ouml;","&Aring;","&Auml;","&Ouml;");
- 
  
      $returnstring = "<blog>";
         while ($line = mysql_fetch_object($result)) {

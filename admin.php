@@ -71,15 +71,15 @@ if($debug){
      	}
         if (isset($_POST["editbtn"]))
         {
-            $title = $_POST["title"];
-            $text  = $_POST["textarea"];  
-            $signature = $_POST["signature"];
+            $title = $_POST["titleedit"];
+            $text  = $_POST["textareaedit"];  
+            $signature = $_POST["signatureedit"];
             $date = $_SESSION["date"];
 
-            
+            //print utf8_encode("<status> TITEL:$title TEXT:$text SIGNTURE:$signature DATE:$date </status>");
 
             $query = "UPDATE post SET title='$title',text='$text',signature='$signature' WHERE date='$date'";
-
+            
             $result = mysql_query($query)
                 or die("Query failed");
 
@@ -99,7 +99,6 @@ if($debug){
             $dateid = $_GET["dateid"];
 
             $query ="SELECT title,text,signature,date,image.path FROM post JOIN image ON post.id=image.id WHERE post.date LIKE '$dateid'";
-            print utf8_encode("<test> SASSE: $test DATEID: $dateid </test>");
 
             $result = mysql_query($query)
             or die("Query failed"); 

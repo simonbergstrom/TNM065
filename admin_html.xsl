@@ -16,7 +16,7 @@
 
 				<div id="adminpage" style="height: 120%;">
 
-					<div id="createpost" style="float:left; width:50%;height:100%;border:2px solid;">
+					<div id="createpost" style="float:left; width:50%;height:100%;">
 						<h2 style="text-align:center"> Skapa nytt inlägg </h2>
 						<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;">
 						<select name ="nrofpic">
@@ -58,7 +58,7 @@
 						<p style="text-align:center;color:red;"><xsl:apply-templates select="post/error"/> </p> 
 					</div>	
 
-					<div id="editpost" style="border:2px solid; float:left;width:49%;height:100%;">
+					<div id="editpost" style="float:left;width:49%;height:100%;">
 						<h2 style="text-align:center"> Redigera inlägg </h2>
 						<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;">
 
@@ -107,7 +107,7 @@
 					</div>	
 
 					
-					<div id="copyright" style="border:2px solid;width:100%;">	
+					<div id="copyright" style="width:100%;">	
 						<p style="text-align:center;bottom:0"><a href="logout.php">Log Out </a></p>	
 						<p style="text-align:center"><xsl:value-of select="copyright"/></p>
 					</div>
