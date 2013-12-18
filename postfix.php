@@ -12,11 +12,15 @@
 	
 	// See which user agent is connecting
 	$UA = getenv('HTTP_USER_AGENT');
-	if (preg_match("/Symbian/", $UA) | preg_match("/Opera/", $UA) | preg_match("/Nokia/", $UA)) 
+
+	require_once "Mobile_Detect.php";
+	$detect = new Mobile_Detect;
+
+	if($detect->isMobile())
 	{
 		// if a mobile phone, use a wml stylesheet and set appropriate MIME type
-		header("Content-type:text/vnd.wap.wml");
-		$xsl->load('index-wml.xsl');
+		header("Content-type:text/html");
+		$xsl->load('index-html-mobil.xsl');
 	} 
 	else 
 	{
