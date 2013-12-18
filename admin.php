@@ -69,6 +69,7 @@ if($debug){
                 
 	    	print utf8_encode($returnstring);	
      	}
+      //IF edit of post btn is pressed 
         if (isset($_POST["editbtn"]))
         {
             $title = $_POST["titleedit"];
@@ -76,7 +77,6 @@ if($debug){
             $signature = $_POST["signatureedit"];
             $date = $_SESSION["date"];
 
-            //print utf8_encode("<status> TITEL:$title TEXT:$text SIGNTURE:$signature DATE:$date </status>");
 
             $query = "UPDATE post SET title='$title',text='$text',signature='$signature' WHERE date='$date'";
             
@@ -90,9 +90,7 @@ if($debug){
 
         }
 
-
-
-
+        //Updates array with result of posts of edit
         if(isset($_GET["title"]) && isset($_GET["dateid"]))
         {
             $test = $_GET["title"];
@@ -260,16 +258,21 @@ if($debug){
                             echo "<error>Invalid file </error>";
                             $error=1;
                           }
-
-
-                    } 
-                                 
+                    }                
                 }
 
                 if(!mysql_errno() && $error!==1) 
                 {
                     print "<status> Posten är inlagd! </status>"; 
+                    // OM twitter check box är itryckt..  
+                    
+                    if( isset($_POST['twitter']))
+                    {
+                        include 'twitter/twittertest.php';
+                        sendtweet($text);
+                    }
                 }
+
             }
 
             else

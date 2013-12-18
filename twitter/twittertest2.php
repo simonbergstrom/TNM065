@@ -3,8 +3,7 @@
 require_once 'twitter-api/TwitterAPIExchange.php';
 
 //Function to take a snippet from blog message + url to blog and tweet it...
-function sendtweet($title,$message)
-{
+
 	$resultmsg = $title . "! " . $message; 
 
 	$resultmsg = substr($resultmsg,0,60); // shorten string to fit in a tweet plus the url
@@ -25,14 +24,13 @@ function sendtweet($title,$message)
 	$twitter = new TwitterAPIExchange($settings);
 
 	$postfields = array(
-	    'status' => "$resultmsg" ); 
+	    'status' => 'tessssstttt' ); 
 
-	 $twitter->buildOauth($url, $requestMethod)
+	
+
+	  echo $twitter->buildOauth($url, $requestMethod)
 	 ->setPostfields($postfields)
 	 ->performRequest();
-}
-	 echo "<status> Tweet inlagt! </status>";
-
 
 
 

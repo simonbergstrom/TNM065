@@ -93,7 +93,7 @@
 	<xsl:template match="image">
 
 		<table>
-		<p style="text-align:center"><img src="{src}" height="400" weight="600"/> </p>
+		<p style="text-align:center"><img src="{src}" width="400px" /> </p>
 
 		<p style="text-align:center"><xsl:value-of select="imagetext"/> </p>
 		</table>

@@ -47,7 +47,8 @@
 							<p>Din signatur:</p>
 							<input type="text" name="signature" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />	
 
-							<br></br>	
+							<br></br><br></br>
+							<input type="checkbox" name="twitter" value="yes"/> Twittra även detta
 							<p><input type="submit" value="Posta inlägg" name="submitbtn"/>	</p>
 
 
