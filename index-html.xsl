@@ -20,7 +20,7 @@
 			   		   		<div class="navbar-header">
 			    
         					  <h2 >Bloggen  </h2>
-        					  <a style="color:green; text-align:center;"  href="mobil.php"> Bloggen i RSS <img src="pictures/rss.png" height="20" weight="40"/></a>
+        					  <a style="color:green; text-align:center;"  href="rss.php"> Bloggen i RSS <img src="pictures/rss.png" height="20" weight="40"/></a>
 
 			      			</div>
 

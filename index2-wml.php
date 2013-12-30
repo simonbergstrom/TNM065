@@ -11,10 +11,10 @@
 
  <?php  
 
-  $link = mysql_connect("localhost", "root", "")
+  $link = mysql_connect("localhost", "root", "root")
         or die("Could not connect");
      
-    mysql_select_db("tnm065")
+    mysql_select_db("project")
         or die("Could not select database");
     
  

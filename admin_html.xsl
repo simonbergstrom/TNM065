@@ -11,11 +11,8 @@
 					<h1 style="text-align:center;"> Bloggen </h1>
 					<h3 style="text-align:center;"> ADMIN </h3>	
 
-
-					<!--<xsl:apply-templates select="post" />  -->
-
 				<div id="adminpage" style="height: 120%;">
-
+					<!-- Fill in how many pics u want to add -->	
 					<div id="createpost" style="float:left; width:50%;height:100%;">
 						<h2 style="text-align:center"> Skapa nytt inlägg </h2>
 						<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;">
@@ -27,7 +24,7 @@
 						</select>
 						<p><input type="submit" value="OK" name="nrofpicbtn"/></p>
 						</form>	
-					
+						<!-- Fill in your blog post -->
 						<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;" enctype="multipart/form-data">
 
 							<xsl:for-each select="image">
@@ -37,15 +34,15 @@
 							</xsl:for-each>	
 						
 							<p>Fyll i titel:</p>
-							<input type="text" name="title" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />	
+							<input type="text" name="title" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue"/>	
 
 							<br></br>	
 							<p>Skriv ditt inlägg:</p>
-							<textarea rows="10" cols="30" id="myForm" name="textarea" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" >Fyll i.....</textarea>	
+							<textarea rows="10" cols="30" id="myForm" name="textarea" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue">Fyll i.....</textarea>	
 
 							<br></br>	
 							<p>Din signatur:</p>
-							<input type="text" name="signature" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue" />	
+							<input type="text" name="signature" value="Fyll i....." onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue"/>	
 
 							<br></br><br></br>
 							<input type="checkbox" name="twitter" value="yes"/> Twittra även detta
@@ -58,7 +55,7 @@
 						<p style="text-align:center;color:green;"><xsl:apply-templates select="post/status"/> </p>
 						<p style="text-align:center;color:red;"><xsl:apply-templates select="post/error"/> </p> 
 					</div>	
-
+					<!-- EDIT posts -->
 					<div id="editpost" style="float:left;width:49%;height:100%;">
 						<h2 style="text-align:center"> Redigera inlägg </h2>
 						<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;">
@@ -67,8 +64,6 @@
 							<input type="submit" value="Sök inlägg" name="searchbtn"/>
 
 							<p style="text-align:center;color:blue;"><xsl:apply-templates select="test"/> </p>
-
-			
 
 						</form>
 
@@ -107,7 +102,6 @@
 
 					</div>	
 
-					
 					<div id="copyright" style="width:100%;">	
 						<p style="text-align:center;bottom:0"><a href="logout.php">Log Out </a></p>	
 						<p style="text-align:center"><xsl:value-of select="copyright"/></p>
@@ -115,7 +109,6 @@
  
 				</div>
 				
-
 				</body>
 		   </html>
   </xsl:template>

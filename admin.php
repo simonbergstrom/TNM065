@@ -96,13 +96,11 @@ if($debug){
             $test = $_GET["title"];
             $dateid = $_GET["dateid"];
 
-            $query ="SELECT title,text,signature,date,image.path FROM post JOIN image ON post.id=image.id WHERE post.date LIKE '$dateid'";
+            $query ="SELECT title,text,signature,date,image.path,image.pictext FROM post JOIN image ON post.id=image.id WHERE post.date LIKE '$dateid'";
 
             $result = mysql_query($query)
             or die("Query failed"); 
 
-            //Sparar path till alla bilder
-            $pathtemp=array();
             $count=0;
             $returnstring="";
 
@@ -114,23 +112,29 @@ if($debug){
             $texttemp = $line->text;
             $signaturetemp = $line->signature;
             $datetemp = $line->date;
-            array_push($pathtemp,$line->path);
+            $imgpath = $line->path;
+            $imgtext = $line->pictext;
+
 
             $resultstring="<post><title>" . $titletemp . "</title>";
             $resultstring= $resultstring ."<text>" . $texttemp . "</text>"; 
             $resultstring= $resultstring ."<signature>" . $signaturetemp . "</signature>";
             $resultstring= $resultstring ."<date>" . $datetemp . "</date>";
-            //$resultstring= $resultstring ."<image>" . "<src>" $datetemp . "</src>";
+            $resultstring= $resultstring ."<image>" . "<src>" . $imgpath . "</src>";
+            $resultstring= $resultstring ."<imagetext>" . $imgtext . "</imagetext>";
 
             //OM mer än 1 bild..
             while($line = mysql_fetch_object($result))
             {
-                array_push($pathtemp,$line->path);
-                $count=$count+1;
+                
+                $imgpath = $line->path;
+                $imgtext = $line->pictext; 
 
+                $resultstring= $resultstring . "<src>" . $imgpath . "</src>";
+                $resultstring= $resultstring . "<imagetext>" . $imgtext . "</imagetext>";
             } 
 
-            $resultstring= $resultstring ."</post>";
+            $resultstring= $resultstring ."</image></post>";
 
             //Behövs då vi ska uppdatera inlägget..Primary key
             $_SESSION["date"] = $datetemp;
@@ -171,8 +175,6 @@ if($debug){
 
             $title = $_POST["title"]; $text= $_POST["textarea"]; $signature=$_POST["signature"];
 
-            //print "<test> Count: $nrb Source:" .  $_FILES["src1"]["name"] ."TmpSource:". $_FILES["src1"]["tmp_name"] .  "Txt:" . $_POST["text1"] . "Title: $title Textarea: $text Signature: $signature </test>";
-
             // Säkrar strängarna för att införa dessa i DB    
             $title = mysql_real_escape_string($title);
             $text = mysql_real_escape_string($text); 
@@ -197,9 +199,7 @@ if($debug){
 
                     $id = mysql_fetch_array($id);
                     $id = $id['ID']; 
-                    //print "<test> ID: $id  src: " . $_FILES["src1"]["name"] . "bildtext: " . $_POST["text1"] . " </test>";    
-                     
-                    
+
                     for($i=1;$i<=$nrb;$i++)
                     {
                         //Info som ska läggas i databasen....
@@ -255,7 +255,8 @@ if($debug){
                           }
                         else
                           {
-                            echo "<error>Invalid file </error>";
+                            echo "<error>Invalid file nr:$nrb src: $source </error>";
+                            $_SESSION['count']= 0;
                             $error=1;
                           }
                     }                
@@ -271,6 +272,8 @@ if($debug){
                         include 'twitter/twittertest.php';
                         sendtweet($text);
                     }
+                    //Sätt till 0 då inlägg har postats..
+                    $_SESSION['count']= 0;
                 }
 
             }
