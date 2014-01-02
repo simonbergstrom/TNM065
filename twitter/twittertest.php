@@ -3,13 +3,22 @@
 require_once 'twitter-api/TwitterAPIExchange.php';
 
 //Function to take a snippet from blog message + url to blog and tweet it...
-function sendtweet($title,$message)
+
+function sendtweet($message)
 {
-	$resultmsg = $title . "! " . $message; 
+	$letters = array("å","ä","ö","Å","Ä","Ö");
+	$replacers = array("&aring;","&auml;","&ouml;","&Aring;","&Auml;","&Ouml;");
+	$info = "......http://www.student.itn.liu.se/~simbe109/TNM065/project/startpage.php";
+
+	$resultmsg =  $message; 
 
 	$resultmsg = substr($resultmsg,0,60); // shorten string to fit in a tweet plus the url
 
-	$resultmsg = $resultmsg . ".....läs mer på http://www.student.itn.liu.se/~simbe109/TNM065/startpage.php"; // add url
+
+
+	$resultmsg = $resultmsg . $info; // add url
+	$resultmsg = str_replace ($letters, $replacers, $resultmsg); // Trixar lite med å ä ö ...
+	$resultmsg = utf8_encode($resultmsg);
 
 	$settings = array(
 

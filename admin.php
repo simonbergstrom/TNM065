@@ -38,10 +38,11 @@ if($debug){
 		header('Location: startpage.php');
 	}
 
-		$title = $_POST["title"]; $text= $_POST["textarea"]; $signature=$_POST["signature"]; $search =$_POST["search"];
+		$title = $_POST["title"]; $text= $_POST["textarea"]; $signature=$_POST["signature"]; 
+    $search =$_POST["search"];
 	    
 
-     	// Om man söker efter inlägg.. inte klart än
+     	// Om man söker efter inlägg för att senare kunna redigera
      	if(isset($_POST["searchbtn"]))
      	{
      		$query ="SELECT * FROM post WHERE title LIKE '%$search%'";
@@ -54,17 +55,15 @@ if($debug){
             
 	    	while ($line = mysql_fetch_object($result))
 	    	{
-                $returnstring = $returnstring . "<post>";
-	    		$title = $line->title;
-                $date = $line->date;
-                $signature = $line->signature;
+            $returnstring = $returnstring . "<post>";
+  		      $title = $line->title;
+            $date = $line->date;
+            $signature = $line->signature;
 
-	    		$returnstring = $returnstring ."<title>" .  $title . "</title>";
-                $returnstring = $returnstring ."<signature>" .  $signature . "</signature>";
-                $returnstring = $returnstring ."<date>" . $date . "</date>";
-                $returnstring = $returnstring . "</post>";
-
-                
+  		      $returnstring = $returnstring ."<title>" .  $title . "</title>";
+            $returnstring = $returnstring ."<signature>" .  $signature . "</signature>";
+            $returnstring = $returnstring ."<date>" . $date . "</date>";
+            $returnstring = $returnstring . "</post>";      
 	    	}
                 
 	    	print utf8_encode($returnstring);	
@@ -83,14 +82,56 @@ if($debug){
             $result = mysql_query($query)
                 or die("Query failed");
 
-                if(!mysql_errno() && isset($_POST["titleedit"]) && isset($_POST["textareaedit"]) && isset($_POST["signatureedit"]))
+                if(!mysql_errno() && isset($_POST["titleedit"]) && $text!=="." && isset($_POST["signatureedit"]))
                     print "<status> Inlägget ändrades! </status>";
                 else
                     print "<error> Du har inte laddat in något inlägg </error>";
 
         }
 
-        //Updates array with result of posts of edit
+        //if delete btn is pressed
+        if (isset($_POST["deletebtn"]))
+        {
+
+            $date = $_SESSION["date"];
+
+            // First get the id for deleting pics and texts...
+            $query = "SELECT id FROM `project`.`post` WHERE `post`.`date` = '$date'";
+
+            $result = mysql_query($query)
+                or die("Query failed");
+
+            $id = mysql_fetch_object($result);
+
+            $id = $id->id;
+
+            // Then delete all....
+
+            //For the post
+            $query = "DELETE FROM post WHERE id = '$id'";
+
+            $result = mysql_query($query)
+                or die("Query failed");
+
+
+             //For the pictures
+             $query = "DELETE FROM `project`.`image` WHERE `image`.`id` = '$id'"; 
+             
+             if(isset($query))
+            {
+                $result = mysql_query($query)
+                or die("Query failed");
+            }
+            
+            if(!mysql_errno())
+                print "<status> Inlägget raderades! </status>";  
+            else
+                print "<error> Nått gick fel! Försök igen! </error>";
+
+
+        }
+
+        //Updates field with result of posts of edit
         if(isset($_GET["title"]) && isset($_GET["dateid"]))
         {
             $test = $_GET["title"];
@@ -255,7 +296,7 @@ if($debug){
                           }
                         else
                           {
-                            echo "<error>Invalid file nr:$nrb src: $source </error>";
+                            // nått gick snett ... errorhanteringen längre ner
                             $_SESSION['count']= 0;
                             $error=1;
                           }
@@ -275,6 +316,13 @@ if($debug){
                     //Sätt till 0 då inlägg har postats..
                     $_SESSION['count']= 0;
                 }
+                else
+                {
+                   print "<error> Nått gick fel! Försök igen! </error>";
+                   // Ta bort de redan skapade textinlägget om något annat blev fel... så får man göra ett nytt försök
+                   $query = "DELETE FROM post WHERE title = '$title' AND text= '$text' AND signature='$signature'"; 
+                   $result = mysql_query($query);
+                }  
 
             }
 

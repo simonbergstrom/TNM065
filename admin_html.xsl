@@ -94,6 +94,7 @@
 								<input type="text" name="signatureedit" value="{post/signature}"/>	
 
 							<p><input type="submit" value="Utför ändringar" name="editbtn"/></p>
+							<p><input type="submit" value="Ta bort detta inlägg" name="deletebtn"/></p>
 
 						</form>
 
