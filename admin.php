@@ -123,11 +123,10 @@ if($debug){
                 or die("Query failed");
             }
             
-            if(!mysql_errno())
-                print "<status> Inlägget raderades! </status>";  
-            else
-                print "<error> Nått gick fel! Försök igen! </error>";
-
+            if(!mysql_errno() && isset($id))
+                print "<status> Inlägget raderades! $id </status>";  
+            else 
+                print "<error> Du kan inte radera ett tomt inlägg! </error>";
 
         }
 
@@ -213,6 +212,7 @@ if($debug){
             $nrb = $_SESSION['count'];
 
             echo "<post>";
+            $errormsg = ""; // Errormeddelande som tilldelas längre ner
 
             $title = $_POST["title"]; $text= $_POST["textarea"]; $signature=$_POST["signature"];
 
@@ -262,7 +262,7 @@ if($debug){
                           {
                           if ($_FILES["src".$i]["error"] > 0)
                             {
-                                echo "<error> Return Code: " . $_FILES["src".$i]["error"] . "</error>";
+                                $errormsg = $_FILES["src".$i]["error"];
                                 $error=1; 
                             }
                           else
@@ -298,6 +298,7 @@ if($debug){
                           {
                             // nått gick snett ... errorhanteringen längre ner
                             $_SESSION['count']= 0;
+                            $errormsg = "Något fel med bildinladdningen..Kan vara för stor bild eller format utan stöd";
                             $error=1;
                           }
                     }                
@@ -318,7 +319,7 @@ if($debug){
                 }
                 else
                 {
-                   print "<error> Nått gick fel! Försök igen! </error>";
+                   print "<error> Nått gick fel! Försök igen! Errormeddelande: ". $errormsg . " </error>";
                    // Ta bort de redan skapade textinlägget om något annat blev fel... så får man göra ett nytt försök
                    $query = "DELETE FROM post WHERE title = '$title' AND text= '$text' AND signature='$signature'"; 
                    $result = mysql_query($query);
