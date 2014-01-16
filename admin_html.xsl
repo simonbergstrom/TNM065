@@ -28,9 +28,9 @@
 						<form action="admin.php" name="myForm" method="post" style="text-align:center; margin-top:3pc;" enctype="multipart/form-data">
 
 							<xsl:for-each select="image">
-							<p> <label for="file">Filename:</label>
+							<p> <label for="file">Filnamn:</label>
 								<input type="file" name="{src}" id="srcname"/> </p>
-							<p><textarea  rows="1" cols="50" id="picinfo" name="{imagetext}" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue">Fyll i.....</textarea> </p>
+							<p>Bildtext:<textarea  rows="1" cols="50" id="picinfo" name="{imagetext}" onfocus="if(this.value==this.defaultValue)this.value=''" onblur="if(this.value=='')this.value=this.defaultValue">Fyll i.....</textarea> </p>
 							</xsl:for-each>	
 						
 							<p>Fyll i titel:</p>

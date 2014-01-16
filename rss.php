@@ -24,7 +24,7 @@
     or die("Query failed");
 
     $returnstring = "";
-    $nr = "1";
+   
 
      while ($line = mysql_fetch_object($result)) {
     $title = $line->title;
@@ -34,13 +34,13 @@
     $ID = $line->id;
       
       $returnstring = $returnstring . "<item>";
-      $returnstring = $returnstring . "<title> $title $nr </title>";
+      $returnstring = $returnstring . "<title> $title </title>";
       $returnstring = $returnstring . "<description> $text //$signature </description>";
       $returnstring = $returnstring . "<link> http://localhost:8888/TNM065/startpage.php </link>";
       $returnstring = $returnstring . "<pubDate>" . gmdate(DATE_RSS,strtotime($date)) . "</pubDate>";
       $returnstring = $returnstring . "</item>";
 
-      $nr++;
+
     }
 
     print utf8_encode($returnstring); 

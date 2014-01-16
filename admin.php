@@ -96,7 +96,7 @@ if($debug){
             $date = $_SESSION["date"];
 
             // First get the id for deleting pics and texts...
-            $query = "SELECT id FROM `project`.`post` WHERE `post`.`date` = '$date'";
+            $query = "SELECT id FROM post WHERE date = '$date'";
 
             $result = mysql_query($query)
                 or die("Query failed");
@@ -107,24 +107,45 @@ if($debug){
 
             // Then delete all....
 
+            //Delete from folder 
+             $querypath = "SELECT path FROM image WHERE id = '$id'";
+             
+             $resultpath = mysql_query($querypath)
+                or die("Query failed");
+
+              while($line = mysql_fetch_object($resultpath)) 
+              {
+                  $path = realpath($line->path);
+
+                  if(is_readable($path))
+                  {
+                      if(unlink($path))
+                       {
+                         print "<status> Bild borta! </status>";
+                       }
+                       else
+                       {
+                        print "<error> Bild EJ borttagen  </error>";
+                       } 
+                  }
+              }   
+
             //For the post
             $query = "DELETE FROM post WHERE id = '$id'";
 
             $result = mysql_query($query)
                 or die("Query failed");
 
-
-             //For the pictures
-             $query = "DELETE FROM `project`.`image` WHERE `image`.`id` = '$id'"; 
+              //Delete from database
+              $query = "DELETE FROM `project`.`image` WHERE `image`.`id` = '$id'"; 
              
-             if(isset($query))
-            {
+
                 $result = mysql_query($query)
                 or die("Query failed");
-            }
+            
             
             if(!mysql_errno() && isset($id))
-                print "<status> Inlägget raderades! $id </status>";  
+                print "<status> Inlägget raderades! </status>";  
             else 
                 print "<error> Du kan inte radera ett tomt inlägg! </error>";
 
@@ -136,7 +157,7 @@ if($debug){
             $test = $_GET["title"];
             $dateid = $_GET["dateid"];
 
-            $query ="SELECT title,text,signature,date,image.path,image.pictext FROM post JOIN image ON post.id=image.id WHERE post.date LIKE '$dateid'";
+            $query ="SELECT title,text,signature,date FROM post WHERE post.date LIKE '$dateid'";
 
             $result = mysql_query($query)
             or die("Query failed"); 
@@ -152,9 +173,6 @@ if($debug){
             $texttemp = $line->text;
             $signaturetemp = $line->signature;
             $datetemp = $line->date;
-            $imgpath = $line->path;
-            $imgtext = $line->pictext;
-
 
             $resultstring="<post><title>" . $titletemp . "</title>";
             $resultstring= $resultstring ."<text>" . $texttemp . "</text>"; 
@@ -163,16 +181,6 @@ if($debug){
             $resultstring= $resultstring ."<image>" . "<src>" . $imgpath . "</src>";
             $resultstring= $resultstring ."<imagetext>" . $imgtext . "</imagetext>";
 
-            //OM mer än 1 bild..
-            while($line = mysql_fetch_object($result))
-            {
-                
-                $imgpath = $line->path;
-                $imgtext = $line->pictext; 
-
-                $resultstring= $resultstring . "<src>" . $imgpath . "</src>";
-                $resultstring= $resultstring . "<imagetext>" . $imgtext . "</imagetext>";
-            } 
 
             $resultstring= $resultstring ."</image></post>";
 
